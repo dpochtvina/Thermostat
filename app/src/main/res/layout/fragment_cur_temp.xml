@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Temperature now"
+        android:text="Current Temperature"
         android:id="@+id/textViewClue"
         android:layout_below="@+id/tvCurTemp"
         android:layout_centerHorizontal="true" />
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Change to 25.0 °C"
+        android:text="Set to 25.0 °C"
         android:id="@+id/textViewSeekBarStatus"
         android:layout_above="@+id/seekBar"
         android:layout_centerHorizontal="true" />
@@ -152,5 +152,16 @@
         android:layout_marginBottom="79dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Sunday"
+        android:id="@+id/tvWeekDay"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/textClock"
+        android:layout_toStartOf="@+id/textClock"
+        android:layout_marginRight="15dp" />
 
 </RelativeLayout>
