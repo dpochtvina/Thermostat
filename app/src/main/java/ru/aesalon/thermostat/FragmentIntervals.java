@@ -1,5 +1,6 @@
 package ru.aesalon.thermostat;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,10 +49,10 @@ public class FragmentIntervals extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_intervals, container, false);
         spinner = (Spinner) rootView.findViewById(R.id.spinner);
-        String[] data = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_item, data);
+        String[] data = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, data);
         spinner.setAdapter(adapter);
-        spinner.setPrompt("Monday");
+        spinner.setPrompt("Day");
         return rootView;
     }
 
