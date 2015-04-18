@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Thermostat</string>
+
+    <string name="title_section1">Current</string>
+    <string name="title_section2">Day&amp;Night</string>
+    <string name="title_section3">Intervals</string>
+
+    <string name="status_day">Day program running</string>
+    <string name="status_night">Night program running</string>
+    <string name="status_custom">Custom program running</string>
+
+
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
