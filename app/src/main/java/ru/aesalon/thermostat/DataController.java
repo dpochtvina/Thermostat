@@ -163,32 +163,32 @@ public class DataController {
             }
             case 1: {
                 def =  sharedPref.getStringSet(tagIntervals_tue, def);
-                intervals_mon = Interval.convertToInterval(def);
+                intervals_tue = Interval.convertToInterval(def);
                 break;
             }
             case 2: {
                 def =  sharedPref.getStringSet(tagIntervals_wed, def);
-                intervals_mon = Interval.convertToInterval(def);
+                intervals_wed = Interval.convertToInterval(def);
                 break;
             }
             case 3: {
                 def =  sharedPref.getStringSet(tagIntervals_thu, def);
-                intervals_mon = Interval.convertToInterval(def);
+                intervals_thu = Interval.convertToInterval(def);
                 break;
             }
             case 4: {
                 def =  sharedPref.getStringSet(tagIntervals_fri, def);
-                intervals_mon = Interval.convertToInterval(def);
+                intervals_fri = Interval.convertToInterval(def);
                 break;
             }
             case 5: {
                 def =  sharedPref.getStringSet(tagIntervals_sat, def);
-                intervals_mon = Interval.convertToInterval(def);
+                intervals_sat = Interval.convertToInterval(def);
                 break;
             }
             case 6: {
                 def =  sharedPref.getStringSet(tagIntervals_sun, def);
-                intervals_mon = Interval.convertToInterval(def);
+                intervals_sun = Interval.convertToInterval(def);
                 break;
             }
         }

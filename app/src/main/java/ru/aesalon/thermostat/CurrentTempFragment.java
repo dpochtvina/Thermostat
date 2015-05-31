@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextClock;
 import android.widget.TextView;
+import com.rey.material.widget.Switch;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,8 +42,11 @@ public class CurrentTempFragment extends Fragment {
     public static int smooth = 100;
     TextView tvCl;
     TextView tvSeekBarSt;
+    int prevSeekBarProgress=0;
     TextView tvCancel;
     TextView tvConfirm;
+    Switch switchVacation;
+
     TextView tvCurTemp;
     ImageButton btnMinus;
     ImageButton btnPlus;
@@ -128,6 +132,12 @@ public class CurrentTempFragment extends Fragment {
                                 } else {
                                     progressBar.setVisibility(View.INVISIBLE);
                                 }
+                                if (MainActivity.isIsDay){
+                                    MainActivity.desiredTemp = MainActivity.dayTemp;
+
+                                } else {
+                                    MainActivity.desiredTemp = MainActivity.nightTemp;
+                                }
                             }
                         });
                     }
@@ -152,11 +162,22 @@ public class CurrentTempFragment extends Fragment {
         seekBar =(SeekBar) rootView.findViewById(R.id.seekBar);
         _tvTime = (TextView)rootView.findViewById(R.id.tvCl);
         tvCurTemp = (TextView) rootView.findViewById(R.id.tvCurTemp);
+        switchVacation = (Switch) rootView.findViewById(R.id.switchVacation);
 
         int dig = MainActivity.currentTemp / 10 + 5;
         int dig2 = MainActivity.currentTemp % 10;
         tvCurTemp.setText(dig + "." + dig2 + " \u00b0C");
 
+        switchVacation.setChecked(MainActivity.vacation);
+        switchVacation.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(Switch aSwitch, boolean b) {
+                MainActivity.vacation = b;
+                ((MainActivity)getActivity()).saveVacation();
+                ((MainActivity)getActivity()).loadVacation();
+
+            }
+        });
         btnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -259,6 +280,7 @@ public class CurrentTempFragment extends Fragment {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 // TODO Auto-generated method stub
+                prevSeekBarProgress = seekBar.getProgress();
             }
 
             @Override
@@ -273,11 +295,17 @@ public class CurrentTempFragment extends Fragment {
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: disable changes, make btnPlus, btnMinus and confirm and cancel buttons invisible
+                btnPlus.setVisibility(View.INVISIBLE);
+                btnMinus.setVisibility(View.INVISIBLE);
+                tvCancel.setVisibility(View.INVISIBLE);
+                tvConfirm.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
+                seekBar.setProgress(prevSeekBarProgress);
+
             }
         });
-        tvConfirm.setOnClickListener(new View.OnClickListener(){
 
+        tvConfirm.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 MainActivity.desiredTemp=seekBar.getProgress();

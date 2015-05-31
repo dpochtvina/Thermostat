@@ -2,6 +2,8 @@ package ru.aesalon.thermostat;
 
 import java.util.Locale;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -28,6 +30,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public static int currentTemp = 200;
     public static int desiredTemp = 200;
+    public static int nightTemp = 200;
+    public static int dayTemp = 200;
+    public static boolean isIsDay = true;
+    public static boolean vacation = false;
+    SharedPreferences sharedPref;
+    private static String tagVacation="vacation";
+    private static String tagDayTemp="dayTemp";
+    private static String tagNightTemp="dayNight";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,12 +54,43 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
+    public void saveVacation(){
+        Context context = this;
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key2), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(tagVacation, vacation);
+        editor.commit();
+    }
+    public void loadVacation(){
+        Context context = this;
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key2), Context.MODE_PRIVATE);
+        vacation = false;
+        vacation = sharedPref.getBoolean(tagVacation, vacation);
+
+    }
+
+    public void saveTemp(){
+        Context context = this;
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key2), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(tagDayTemp, dayTemp);
+        editor.putInt(tagNightTemp, nightTemp);
+        editor.commit();
+    }
+    public void loadTemp(){
+        Context context = this;
+        sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key2), Context.MODE_PRIVATE);
+        dayTemp = sharedPref.getInt(tagDayTemp, dayTemp);
+        nightTemp = sharedPref.getInt(tagNightTemp, nightTemp);
+
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        loadTemp();
+        loadVacation();
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);

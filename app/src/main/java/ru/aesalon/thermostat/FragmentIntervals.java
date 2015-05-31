@@ -1,12 +1,16 @@
 package ru.aesalon.thermostat;
 
 import android.app.ActionBar;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -49,11 +53,13 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
      * The fragment argument representing the section number for this
      * fragment.
      */
+    protected static final int REFRESH = 0;
     private HashMap<String, Vector<DataController.Interval>>storage;
     private Spinner spn_label;
     Button bt_time_light;
     Time t1 = null;
     Time t2 = null;
+    private Handler _hRedraw;
     DataController controller;
     @InjectView(R.id.intervals_table) protected TableLayout interTable;
 
@@ -194,8 +200,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                                         break;
 
                                 }
-
-
+                                _hRedraw.sendEmptyMessage(REFRESH);;
                                 t1 = null;
                                 t2 = null;
                             }
@@ -219,6 +224,11 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
         DialogFragment fragment = DialogFragment.newInstance(builder);
         fragment.show(getFragmentManager(), null);
     }
+    private void redrawEverything(){
+
+        interTable.invalidate();
+        interTable.refreshDrawableState();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -227,9 +237,20 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
         FloatingActionButton bt_time_light = (FloatingActionButton)rootView.findViewById(R.id.button_bt_float_color);
 
 
+
         interTable = (TableLayout)rootView.findViewById(R.id.intervals_table);
         spn_label = (Spinner)rootView.findViewById(R.id.spinner_label);
-
+        _hRedraw=new Handler(){
+            @Override
+            public void handleMessage(Message msg)
+            {
+                switch (msg.what) {
+                    case REFRESH:
+                        redrawEverything();
+                        break;
+                }
+            }
+        };
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.days_array, R.layout.row_spn);
         adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         spn_label.setAdapter(adapter);
