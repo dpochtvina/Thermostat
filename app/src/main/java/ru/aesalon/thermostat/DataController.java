@@ -105,6 +105,72 @@ public class DataController {
         editor.commit();
     }
 
+    public void DELETE(Interval interval)
+    {
+        if(intervals_mon!= null) {
+            intervals_mon.remove(interval);
+            updateChangesMon();
+        }
+        if(intervals_tue!=null) {
+            intervals_tue.remove(interval);
+            updateChangesTue();
+        }
+        if(intervals_wed!=null) {
+            intervals_wed.remove(interval);
+            updateChangesWed();
+        }
+        if(intervals_thu!=null) {
+            intervals_thu.remove(interval);
+            updateChangesThu();
+        }
+        if(intervals_fri!=null) {
+            intervals_fri.remove(interval);
+            updateChangesFri();
+        }
+        if(intervals_sat!=null) {
+            intervals_sat.remove(interval);
+            updateChangesSat();
+        }
+        if(intervals_sun!=null)
+        {
+            intervals_sun.remove(interval);
+            updateChangesSun();
+        }
+    }
+    public void deleteDay(int day){
+        switch(day){
+            case 0:
+                intervals_mon = new Vector<Interval>();
+                updateChangesMon();
+                break;
+            case 1:
+                intervals_tue = new Vector<Interval>();
+                updateChangesTue();
+                break;
+            case 2:
+                intervals_wed = new Vector<Interval>();
+                updateChangesWed();
+                break;
+            case 3:
+                intervals_thu = new Vector<Interval>();
+                updateChangesThu();
+                break;
+            case 4:
+                intervals_fri = new Vector<Interval>();
+                updateChangesFri();
+                break;
+            case 5:
+                intervals_sat = new Vector<Interval>();
+                updateChangesSat();
+                break;
+            case 6:
+                intervals_sun = new Vector<Interval>();
+                updateChangesSun();
+                break;
+
+
+        }
+    }
     public void addIntervalMon(Time tm1, Time tm2){
         if (intervals_mon==null){
             intervals_mon = new Vector<>();

@@ -261,6 +261,19 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
             }
         };
 
+
+
+        interTable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (v.getId()==R.id.intervals_row_button){
+                    controller.deleteDay(spn_label.getSelectedItemPosition());
+                }
+            }
+        });
+
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.days_array, R.layout.row_spn);
         adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         spn_label.setAdapter(adapter);
@@ -333,8 +346,8 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
 
             }
         };
-        FloatingActionButton btn = (FloatingActionButton)rootView.findViewById(R.id.button_bt_float_color);
-        btn.setOnClickListener(listener);
+        FloatingActionButton btn2 = (FloatingActionButton)rootView.findViewById(R.id.button_bt_float_color);
+        btn2.setOnClickListener(listener);
 
         return rootView;
     }
@@ -349,14 +362,21 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
             TextView tv = (TextView)tableRow.findViewById(R.id.interbals_row_timeTV);
             tv.setText(inter.toString());
 
+            Button btn = (Button)tableRow.findViewById(R.id.intervals_row_button);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (v.getId()==R.id.intervals_row_button){
+                        controller.deleteDay(spn_label.getSelectedItemPosition());
+                    }
+                }
+            });
             interTable.addView(tableRow);
         }
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.intervals_row_button){
 
-        }
     }
 }
