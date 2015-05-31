@@ -22,6 +22,11 @@
         <item name="fab_iconLineMorphing">@style/FloatingActionButtonIcon</item>
         <item name="rd_delayClick">untilRelease</item>
     </style>
+    <style name="SnackBarSingleLine" parent="Material.Widget.SnackBar.Mobile">
+        <item name="sb_text">The time has been added. Refresh the page.</item>
+        <item name="sb_actionText">CLOSE</item>
+        <item name="sb_duration">2000</item>
+    </style>
     <style name="FloatingActionButtonIcon" >
         <item name="lmd_state">@xml/fab_icon_states</item>
         <item name="lmd_curState">0</item>

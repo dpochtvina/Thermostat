@@ -47,7 +47,8 @@ public class CurrentTempFragment extends Fragment {
     TextView tvCancel;
     TextView tvConfirm;
     Switch switchVacation;
-
+    boolean nowDay = true;
+    boolean changeFromNighttoDay = true;
     TextView tvCurTemp;
     ImageButton btnMinus;
     ImageButton btnPlus;
@@ -56,7 +57,7 @@ public class CurrentTempFragment extends Fragment {
     DataController dataController;
     TextClock textClock;
     private boolean mLongClickPlus;
-    GregorianCalendar gregorianCalendar = new GregorianCalendar();
+    static GregorianCalendar gregorianCalendar = new GregorianCalendar();
     Thread tempChange;
 
     private final SimpleDateFormat _sdfWatchTime = new SimpleDateFormat("EEEE HH:mm:ss");
@@ -84,7 +85,9 @@ public class CurrentTempFragment extends Fragment {
         super.onStart();
         dataController = DataController.getInstance(getActivity());
         TimeZone timezone = TimeZone.getDefault();
-       gregorianCalendar = new GregorianCalendar(timezone);
+        if(gregorianCalendar==null) {
+            gregorianCalendar = new GregorianCalendar(timezone);
+        }
 
         Thread t = new Thread() {
 
@@ -105,10 +108,16 @@ public class CurrentTempFragment extends Fragment {
                                         second);
                                 Time time = new Time();
                                 time.set(0, Integer.parseInt(minute), Integer.parseInt(hour), 0, 0, 0);
-                                if(dataController.isDay(gregorianCalendar.get(Calendar.DAY_OF_WEEK),time)){
-                                    MainActivity.isIsDay = true;
-                                } else {
-                                    MainActivity.isIsDay = false;
+
+                                if (!MainActivity.vacation && changeFromNighttoDay) {
+                                    if (dataController.isDay(gregorianCalendar.get(Calendar.DAY_OF_WEEK), time)) {
+                                        MainActivity.isIsDay = true;
+                                    } else {
+                                        MainActivity.isIsDay = false;
+                                    }
+                                }
+                                if(dataController.isDay(gregorianCalendar.get(Calendar.DAY_OF_WEEK), time) != nowDay){
+                                    changeFromNighttoDay = true;
                                 }
                                 gregorianCalendar.add(Calendar.SECOND, timeBoost / smooth);
                              }
@@ -143,11 +152,13 @@ public class CurrentTempFragment extends Fragment {
                                 } else {
                                     progressBar.setVisibility(View.INVISIBLE);
                                 }
-                                if (MainActivity.isIsDay){
-                                    MainActivity.desiredTemp = MainActivity.dayTemp;
+                                if (!MainActivity.vacation && changeFromNighttoDay) {
+                                    if (MainActivity.isIsDay) {
+                                        MainActivity.desiredTemp = MainActivity.dayTemp;
 
-                                } else {
-                                    MainActivity.desiredTemp = MainActivity.nightTemp;
+                                    } else {
+                                        MainActivity.desiredTemp = MainActivity.nightTemp;
+                                    }
                                 }
                             }
                         });
@@ -319,6 +330,8 @@ public class CurrentTempFragment extends Fragment {
         tvConfirm.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                changeFromNighttoDay= false;
+                nowDay = MainActivity.isIsDay;
                 MainActivity.desiredTemp=seekBar.getProgress();
                 btnPlus.setVisibility(View.INVISIBLE);
                 btnMinus.setVisibility(View.INVISIBLE);

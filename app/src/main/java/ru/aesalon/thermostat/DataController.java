@@ -39,13 +39,20 @@ public class DataController {
             return dataController;
         } else {
             dataController = new DataController(activity);
+
             return dataController;
         }
     }
 
     private DataController(Activity activity){
         this.activity= activity;
-
+        intervals_mon = new Vector<>();
+        intervals_tue = new Vector<>();
+        intervals_wed = new Vector<>();
+        intervals_thu = new Vector<>();
+        intervals_fri = new Vector<>();
+        intervals_sat = new Vector<>();
+        intervals_sun = new Vector<>();
         Context context = activity;
         sharedPref = context.getSharedPreferences(
                 activity.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -57,12 +64,39 @@ public class DataController {
     }
 
     public boolean isDay(int day, Time tm){
+        day-=2;
+        if (day == -1){
+            day = 6;
+        }
         switch(day){
             case 0:
+                return searchInterval(tm, intervals_mon);
+            case 1:
+                return searchInterval(tm, intervals_tue);
+            case 2:
+                return searchInterval(tm, intervals_wed);
+            case 3:
+                return searchInterval(tm, intervals_thu);
+            case 4:
+                return searchInterval(tm, intervals_fri);
+            case 5:
+                return searchInterval(tm, intervals_sat);
+            case 6:
+                return searchInterval(tm, intervals_sun);
 
-            break;
         }
 
+        return false;
+    }
+    private boolean searchInterval(Time tm, Vector<Interval> intervals){
+        for(Interval inter:intervals){
+            int compare = tm.hour*60+tm.minute;
+            int low = inter.tm1.hour*60+inter.tm1.minute;
+            int high = inter.tm2.hour*60+inter.tm2.minute;
+            if (low < compare && compare < high){
+                return true;
+            }
+        }
         return false;
     }
     public void updateChangesMon(){
@@ -160,11 +194,27 @@ public class DataController {
 
     public Vector<Interval> getIntervals(int i){
         loadSaved(i);
+        switch(i){
+            case 0:
+                return intervals_mon;
+            case 1:
+                return intervals_tue;
+            case 2:
+                return intervals_wed;
+            case 3:
+                return intervals_thu;
+            case 4:
+                return intervals_fri;
+            case 5:
+                return intervals_sat;
+            case 6:
+                return intervals_sun;
+        }
         return intervals_mon;
     }
 
     public void loadSaved(int day){
-        intervals_mon = new Vector<>();
+
         Set<String> def = new HashSet<>();
         switch(day) {
             case 0: {

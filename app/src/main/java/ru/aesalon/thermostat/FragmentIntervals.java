@@ -28,6 +28,7 @@ import com.rey.material.app.DialogFragment;
 import com.rey.material.app.TimePickerDialog;
 import com.rey.material.drawable.RippleDrawable;
 import com.rey.material.widget.FloatingActionButton;
+import com.rey.material.widget.SnackBar;
 import com.rey.material.widget.Spinner;
 import com.rey.material.widget.Button;
 
@@ -53,6 +54,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
      * The fragment argument representing the section number for this
      * fragment.
      */
+    SnackBar mSnackBar;
     protected static final int REFRESH = 0;
     private HashMap<String, Vector<DataController.Interval>>storage;
     private Spinner spn_label;
@@ -168,6 +170,13 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                                 Toast.makeText(getActivity(), "Finish time " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
                                 t2.set(0, getMinute(), getHour(), 0, 0, 0);
 
+                                int low= t1.hour*60+t1.minute;
+                                int high = t2.hour*60+t2.minute;
+                                if (low>=high){
+                                    t1 = null;
+                                    t2 = null;
+                                    Toast.makeText(getActivity(), "Correct times! The first time should be lower then the last one.", Toast.LENGTH_SHORT).show();
+                                }
 
                                 switch(spn_label.getSelectedItemPosition()){
                                     case 0:
@@ -201,6 +210,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
 
                                 }
                                 _hRedraw.sendEmptyMessage(REFRESH);;
+                               Toast.makeText(getActivity(), "The time has been added. Update the page", Toast.LENGTH_SHORT).show();
                                 t1 = null;
                                 t2 = null;
                             }
@@ -237,7 +247,6 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
         FloatingActionButton bt_time_light = (FloatingActionButton)rootView.findViewById(R.id.button_bt_float_color);
 
 
-
         interTable = (TableLayout)rootView.findViewById(R.id.intervals_table);
         spn_label = (Spinner)rootView.findViewById(R.id.spinner_label);
         _hRedraw=new Handler(){
@@ -251,6 +260,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                 }
             }
         };
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.days_array, R.layout.row_spn);
         adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         spn_label.setAdapter(adapter);
@@ -304,7 +314,6 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                         break;
                     }
                 }
-                Toast.makeText(getActivity(),"Text!",Toast.LENGTH_SHORT).show();
             }
         });
 
