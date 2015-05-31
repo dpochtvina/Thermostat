@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -52,6 +53,7 @@ public class CurrentTempFragment extends Fragment {
     ImageButton btnPlus;
     ProgressBar progressBar;
     SeekBar seekBar;
+    DataController dataController;
     TextClock textClock;
     private boolean mLongClickPlus;
     GregorianCalendar gregorianCalendar = new GregorianCalendar();
@@ -80,6 +82,7 @@ public class CurrentTempFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
+        dataController = DataController.getInstance(getActivity());
         TimeZone timezone = TimeZone.getDefault();
        gregorianCalendar = new GregorianCalendar(timezone);
 
@@ -96,11 +99,18 @@ public class CurrentTempFragment extends Fragment {
                                 String hour = gregorianCalendar.get(Calendar.HOUR_OF_DAY) < 10 ? "0"+gregorianCalendar.get(Calendar.HOUR_OF_DAY) : gregorianCalendar.get(Calendar.HOUR_OF_DAY)+"";
                                 String minute = gregorianCalendar.get(Calendar.MINUTE) < 10 ? "0"+gregorianCalendar.get(Calendar.MINUTE) : gregorianCalendar.get(Calendar.MINUTE)+"";
                                 String second = gregorianCalendar.get(Calendar.SECOND) < 10 ? "0"+gregorianCalendar.get(Calendar.SECOND) : gregorianCalendar.get(Calendar.SECOND)+"";
-                                _tvTime.setText(" "+gregorianCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())+" "
-                                +hour + ":"
-                                        + minute +":"+
-                                second);
-                                gregorianCalendar.add(Calendar.SECOND, timeBoost/smooth);
+                                _tvTime.setText(" " + gregorianCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()) + " "
+                                        + hour + ":"
+                                        + minute + ":" +
+                                        second);
+                                Time time = new Time();
+                                time.set(0, Integer.parseInt(minute), Integer.parseInt(hour), 0, 0, 0);
+                                if(dataController.isDay(gregorianCalendar.get(Calendar.DAY_OF_WEEK),time)){
+                                    MainActivity.isIsDay = true;
+                                } else {
+                                    MainActivity.isIsDay = false;
+                                }
+                                gregorianCalendar.add(Calendar.SECOND, timeBoost / smooth);
                              }
                         });
                     }
@@ -123,6 +133,7 @@ public class CurrentTempFragment extends Fragment {
                                 if( MainActivity.desiredTemp!=MainActivity.currentTemp) {
                                     if (MainActivity.currentTemp < MainActivity.desiredTemp) {
                                         MainActivity.currentTemp++;
+
                                     } else {
                                         MainActivity.currentTemp--;
                                     }

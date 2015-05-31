@@ -49,11 +49,22 @@ public class DataController {
         Context context = activity;
         sharedPref = context.getSharedPreferences(
                 activity.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
+        for (int i=0;i<7;i++){
+            loadSaved(i);
+        }
 
 
     }
 
+    public boolean isDay(int day, Time tm){
+        switch(day){
+            case 0:
+
+            break;
+        }
+
+        return false;
+    }
     public void updateChangesMon(){
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putStringSet(tagIntervals_mon, Interval.convertToSet(intervals_mon));
