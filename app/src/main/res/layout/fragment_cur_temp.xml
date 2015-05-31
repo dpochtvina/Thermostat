@@ -98,15 +98,6 @@
         android:layout_toEndOf="@+id/section_label"
         android:visibility="invisible" />
 
-    <TextClock
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textClock"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/tvCurTemp" />
-
     <ImageButton
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -155,13 +146,12 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Sunday"
-        android:id="@+id/tvWeekDay"
+        android:layout_height="40dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/tvCl"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/textClock"
-        android:layout_toStartOf="@+id/textClock"
-        android:layout_marginRight="15dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

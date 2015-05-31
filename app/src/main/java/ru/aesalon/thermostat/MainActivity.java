@@ -26,6 +26,9 @@ import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
+    public static int currentTemp = 200;
+    public static int desiredTemp = 200;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -45,6 +48,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -133,7 +137,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            switch(position){
+            switch (position) {
                 case 0:
                     return CurrentTempFragment.newInstance(position + 1);
                 case 1:
@@ -165,189 +169,5 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return null;
         }
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class CurrentTempFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        TextView tvSeekBarSt;
-        TextView tvCancel;
-        TextView tvConfirm;
-        ImageButton btnMinus;
-        ImageButton btnPlus;
-        ProgressBar progressBar;
-        SeekBar seekBar;
-        private boolean mLongClickPlus;
-
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static CurrentTempFragment newInstance(int sectionNumber) {
-            CurrentTempFragment fragment = new CurrentTempFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public CurrentTempFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_cur_temp, container, false);
-            tvSeekBarSt = (TextView) rootView.findViewById(R.id.textViewSeekBarStatus);
-            tvCancel = (TextView) rootView.findViewById(R.id.textViewCancel);
-            tvConfirm = (TextView) rootView.findViewById(R.id.textViewConfirm);
-            btnMinus = (ImageButton) rootView.findViewById(R.id.buttonMinus);
-            btnPlus = (ImageButton) rootView.findViewById(R.id.buttonPlus);
-            progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
-            seekBar =(SeekBar) rootView.findViewById(R.id.seekBar);
-
-            btnPlus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    seekBar.setProgress(seekBar.getProgress() + 1);
-                }
-            });
-            btnPlus.setOnLongClickListener(new View.OnLongClickListener() {
-
-                @Override
-                public boolean onLongClick(View v) {
-                    mLongClickPlus = true;
-                    new AsyncTask<Void, Void, Void>() {
-
-                        @Override
-                        protected Void doInBackground(Void... params) {
-                            int timeSleep = 200;
-                            while (mLongClickPlus) {
-                                seekBar.setProgress(seekBar.getProgress() + 1);
-                                try {
-                                    Thread.sleep(timeSleep);
-                                    if (timeSleep > 30)
-                                        timeSleep -= 30;
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            return null;
-                        }
-                    }.execute();
-                    return true;
-                }
-            });
-            btnPlus.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        mLongClickPlus = false;
-                    }
-                    return false;
-                }
-            });
-            btnMinus.setOnLongClickListener(new View.OnLongClickListener() {
-
-                @Override
-                public boolean onLongClick(View v) {
-                    mLongClickPlus = true;
-                    new AsyncTask<Void, Void, Void>() {
-
-                        @Override
-                        protected Void doInBackground(Void... params) {
-                            int timeSleep = 200;
-                            while (mLongClickPlus) {
-                                seekBar.setProgress(seekBar.getProgress() - 1);
-                                try {
-                                    Thread.sleep(timeSleep);
-                                    if (timeSleep > 30)
-                                        timeSleep -= 30;
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            return null;
-                        }
-                    }.execute();
-                    return true;
-                }
-            });
-            btnMinus.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        mLongClickPlus = false;
-                    }
-                    return false;
-                }
-            });
-            btnMinus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    seekBar.setProgress(seekBar.getProgress() - 1);
-                }
-            });
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    // TODO Auto-generated method stub
-                    tvCancel.setVisibility(View.VISIBLE);
-                    tvConfirm.setVisibility(View.VISIBLE);
-                    btnMinus.setVisibility(View.VISIBLE);
-                    btnPlus.setVisibility(View.VISIBLE);
-                    if (tvCancel.getVisibility() == View.INVISIBLE) {
-                        tvCancel.startAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.abc_fade_in));
-                        tvConfirm.startAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.abc_fade_in));
-                        btnMinus.startAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.abc_fade_in));
-                        btnPlus.startAnimation(AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.abc_fade_in));
-                    }
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    // TODO Auto-generated method stub
-                }
-
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    // TODO Auto-generated method stub
-                    int dig = progress / 10 + 5;
-                    int dig2 = progress % 10;
-                    tvSeekBarSt.setText("Change to " + dig + "." + dig2 + " °C");
-                }
-            });
-
-            tvCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //TODO: disable changes, make btnPlus, btnMinus and confirm and cancel buttons invisible
-                }
-            });
-            tvConfirm.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    btnPlus.setVisibility(View.INVISIBLE);
-                    btnMinus.setVisibility(View.INVISIBLE);
-                    tvCancel.setVisibility(View.INVISIBLE);
-                    tvConfirm.setVisibility(View.INVISIBLE);
-                    progressBar.setVisibility(View.VISIBLE);
-                    //TODO:initiate temperature changing
-                }
-            });
-            return rootView;
-        }
-
-    }
-
-
 
 }

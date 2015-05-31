@@ -44,6 +44,7 @@ public class FragmentDayNight extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_daynight, container, false);
 
+
         return rootView;
     }
 
