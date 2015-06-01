@@ -54,11 +54,14 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
      * The fragment argument representing the section number for this
      * fragment.
      */
-    SnackBar mSnackBar;
+    ArrayAdapter<CharSequence> adapter;
     protected static final int REFRESH = 0;
     private HashMap<String, Vector<DataController.Interval>>storage;
     private Spinner spn_label;
     Button bt_time_light;
+    int nowday = 0;
+    String tagNow;
+    FloatingActionButton btn;
     Time t1 = null;
     Time t2 = null;
     private Handler _hRedraw;
@@ -66,6 +69,13 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
     @InjectView(R.id.intervals_table) protected TableLayout interTable;
 
     private static final String ARG_SECTION_NUMBER = "section_number";
+
+    public void REALLOADDAY(int numDayWeek)
+    {
+
+        nowday = numDayWeek;
+        loadDay(numDayWeek);
+    }
 
     @Override
     public void onStart(){
@@ -134,6 +144,50 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                 break;
             }
         }
+        switch(numDayWeek){
+            case 0:
+            {
+                addRows(storage.get(DataController.tagIntervals_mon));
+                tagNow = DataController.tagIntervals_mon;
+                break;
+            }
+            case 1:
+            {
+                addRows(storage.get(DataController.tagIntervals_tue));
+                tagNow = DataController.tagIntervals_tue;
+                break;
+            }
+            case 2:
+            {
+                addRows(storage.get(DataController.tagIntervals_wed));
+                tagNow = DataController.tagIntervals_wed;
+                break;
+            }
+            case 3:
+            {
+                addRows(storage.get(DataController.tagIntervals_thu));
+                tagNow = DataController.tagIntervals_thu;
+                break;
+            }
+            case 4:
+            {
+                addRows(storage.get(DataController.tagIntervals_fri));
+                tagNow = DataController.tagIntervals_fri;
+                break;
+            }
+            case 5:
+            {
+                addRows(storage.get(DataController.tagIntervals_sat));
+                tagNow = DataController.tagIntervals_sat;
+                break;
+            }
+            case 6:
+            {
+                addRows(storage.get(DataController.tagIntervals_sun));
+                tagNow = DataController.tagIntervals_sun;
+                break;
+            }
+        }
     }
     /**
      * Returns a new instance of this fragment for the given section
@@ -175,42 +229,43 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                                 if (low>=high){
                                     t1 = null;
                                     t2 = null;
-                                    Toast.makeText(getActivity(), "Correct times! The first time should be lower then the last one.", Toast.LENGTH_SHORT).show();
-                                }
+                                    Toast.makeText(getActivity(), "Incorrect times! The first time should be lower then the last one.", Toast.LENGTH_SHORT).show();
+                                } else {
 
-                                switch(spn_label.getSelectedItemPosition()){
-                                    case 0:
-                                        controller.addIntervalMon(t1, t2);
-                                        controller.updateChangesMon();
-                                        break;
-                                    case 1:
-                                        controller.addIntervalTue(t1, t2);
-                                        controller.updateChangesTue();
-                                        break;
-                                    case 2:
-                                        controller.addIntervalWed(t1, t2);
-                                        controller.updateChangesWed();
-                                        break;
-                                    case 3:
-                                        controller.addIntervalThu(t1, t2);
-                                        controller.updateChangesThu();
-                                        break;
-                                    case 4:
-                                        controller.addIntervalFri(t1, t2);
-                                        controller.updateChangesFri();
-                                        break;
-                                    case 5:
-                                        controller.addIntervalSat(t1, t2);
-                                        controller.updateChangesSat();
-                                        break;
-                                    case 6:
-                                        controller.addIntervalSun(t1, t2);
-                                        controller.updateChangesSun();
-                                        break;
+                                    switch (spn_label.getSelectedItemPosition()) {
+                                        case 0:
+                                            controller.addIntervalMon(t1, t2);
+                                            controller.updateChangesMon();
+                                            break;
+                                        case 1:
+                                            controller.addIntervalTue(t1, t2);
+                                            controller.updateChangesTue();
+                                            break;
+                                        case 2:
+                                            controller.addIntervalWed(t1, t2);
+                                            controller.updateChangesWed();
+                                            break;
+                                        case 3:
+                                            controller.addIntervalThu(t1, t2);
+                                            controller.updateChangesThu();
+                                            break;
+                                        case 4:
+                                            controller.addIntervalFri(t1, t2);
+                                            controller.updateChangesFri();
+                                            break;
+                                        case 5:
+                                            controller.addIntervalSat(t1, t2);
+                                            controller.updateChangesSat();
+                                            break;
+                                        case 6:
+                                            controller.addIntervalSun(t1, t2);
+                                            controller.updateChangesSun();
+                                            break;
 
+                                    }
+                                    REALLOADDAY(nowday);
                                 }
                                 _hRedraw.sendEmptyMessage(REFRESH);;
-                               Toast.makeText(getActivity(), "The time has been added. Update the page", Toast.LENGTH_SHORT).show();
                                 t1 = null;
                                 t2 = null;
                             }
@@ -263,25 +318,10 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
 
 
 
-        interTable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (v.getId()==R.id.intervals_row_button){
-                    controller.deleteDay(spn_label.getSelectedItemPosition());
-                }
-            }
-        });
-
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getApplicationContext(), R.array.days_array, R.layout.row_spn);
         adapter.setDropDownViewResource(R.layout.row_spn_dropdown);
         spn_label.setAdapter(adapter);
-      //  addRow("10:00-13:00", 0);
-       // addRow("15:00-18:00",1);
-       // addRow("15:00-18:00",2);
-       // addRow("15:00-18:00",3);
-        //create mondaytable cause it's first
 
         spn_label.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
@@ -338,45 +378,48 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                 if(v instanceof FloatingActionButton){
                     dialogShow(v);
                     dialogShow(v);
-                    FloatingActionButton bt = (FloatingActionButton) v;
-                    bt.setLineMorphingState((bt.getLineMorphingState() + 1) % 2, true);
                 }
 
                 System.out.println(v + " " + ((RippleDrawable)v.getBackground()).getDelayClickType());
 
             }
         };
-        FloatingActionButton btn2 = (FloatingActionButton)rootView.findViewById(R.id.button_bt_float_color);
-        btn2.setOnClickListener(listener);
+        btn = (FloatingActionButton)rootView.findViewById(R.id.button_bt_float_color);
+        btn.setOnClickListener(listener);
 
         return rootView;
     }
 
 
     private void addRows(Vector<DataController.Interval>intervals){
+        if(intervals.size()>=6)
+            btn.setVisibility(View.INVISIBLE);
+        else
+            btn.setVisibility(View.VISIBLE);
         interTable.removeAllViews();
-        for(DataController.Interval inter:intervals){
-
+        for(final DataController.Interval inter:intervals){
+            final DataController.Interval interval = inter;
             LayoutInflater li=(LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View tableRow = li.inflate(R.layout.intervals_row, null);
             TextView tv = (TextView)tableRow.findViewById(R.id.interbals_row_timeTV);
             tv.setText(inter.toString());
-
-            Button btn = (Button)tableRow.findViewById(R.id.intervals_row_button);
-            btn.setOnClickListener(new View.OnClickListener() {
+            Button delete = (Button)tableRow.findViewById(R.id.intervals_row_button);
+            delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (v.getId()==R.id.intervals_row_button){
-                        controller.deleteDay(spn_label.getSelectedItemPosition());
-                    }
+                    //new AlertDialog.Builder(FragmentIntervals.this.getActivity()).setMessage(interval.toString()).show();
+                    controller.DELETE(interval);
+                    REALLOADDAY(nowday);
                 }
             });
+
             interTable.addView(tableRow);
         }
     }
 
     @Override
     public void onClick(View v) {
-
+        if (v.getId()==R.id.intervals_row_button){
+        }
     }
 }
