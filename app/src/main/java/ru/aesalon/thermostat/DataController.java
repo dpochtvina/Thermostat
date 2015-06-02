@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.text.format.Time;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.Vector;
 
@@ -14,11 +15,11 @@ import java.util.Vector;
  */
 public class DataController {
 
-    private int timeValue(Time t) {
+    private static int timeValue(Time t) {
         return t.hour * 60 + t.minute;
     }
 
-    private void addElement(Vector<Interval> vec, Interval value) {
+    public static void addElement(Vector<Interval> vec, Interval value) {
         boolean[] used = new boolean[24 * 60 + 1];
         for (int i = 0; i < used.length; ++i)
             used[i] = false;
@@ -403,7 +404,7 @@ public class DataController {
         }
 
         public static Set<String> convertToSet(Vector<Interval> intervals) {
-            Set<String> convert = new HashSet<String>();
+            Set<String> convert = new LinkedHashSet<String>();
             for (Interval in : intervals) {
                 convert.add(in.toString());
             }
@@ -417,7 +418,8 @@ public class DataController {
                 Time time2 = new Time();
                 time1.set(0, Integer.parseInt(in.substring(3, 5)), Integer.parseInt(in.substring(0, 2)), 0, 0, 0);
                 time2.set(0, Integer.parseInt(in.substring(11, 13)), Integer.parseInt(in.substring(8, 10)), 0, 0, 0);
-                convert.add(new Interval(time1, time2));
+                addElement(convert, new Interval(time1, time2));
+//                convert.add(new Interval(time1, time2));
             }
             return convert;
         }
