@@ -287,6 +287,9 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                 break;
         }
         DialogFragment fragment = DialogFragment.newInstance(builder);
+//        if (builder != null) {
+//            builder.getDialog().setTitle(t1 == null ? " 3" : " 4");
+//        }
         fragment.show(getFragmentManager(), null);
     }
     private void redrawEverything(){
