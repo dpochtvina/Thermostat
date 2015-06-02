@@ -205,7 +205,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
     public FragmentIntervals() {
     }
 
-    public void dialogShow(View v) {
+    public void dialogShow(final View v) {
         Dialog.Builder builder = null;
         switch (v.getId()) {
             case R.id.button_bt_float_color:
@@ -219,6 +219,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                             t1 = new Time();
                             Toast.makeText(getActivity(), "Start time " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
                             t1.set(0, getMinute(), getHour(), 0, 0, 0);
+                            dialogShow(v);
                         } else {
                             if (t2 == null){
                                 t2 = new Time();
@@ -381,7 +382,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
             public void onClick(View v) {
                 if(v instanceof FloatingActionButton){
                     dialogShow(v);
-                    dialogShow(v);
+//                    dialogShow(v);
                 }
 
                 System.out.println(v + " " + ((RippleDrawable)v.getBackground()).getDelayClickType());
