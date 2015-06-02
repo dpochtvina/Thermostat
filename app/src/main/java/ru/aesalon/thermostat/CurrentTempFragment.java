@@ -96,7 +96,7 @@ public class CurrentTempFragment extends Fragment {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep((int)(1000/timeBoost));
+                        Thread.sleep((int)(timeBoost / smooth));
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -120,7 +120,7 @@ public class CurrentTempFragment extends Fragment {
                                 if(dataController.isDay(gregorianCalendar.get(Calendar.DAY_OF_WEEK), time) != nowDay){
                                     changeFromNighttoDay = true;
                                 }
-                                gregorianCalendar.add(Calendar.SECOND, timeBoost / smooth);
+                                gregorianCalendar.add(Calendar.MILLISECOND, timeBoost / smooth * 300);
                              }
                         });
                     }
