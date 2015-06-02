@@ -395,7 +395,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
 
 
     private void addRows(Vector<DataController.Interval>intervals){
-        if(intervals.size()>=6)
+        if(intervals.size()>=5)
             btn.setVisibility(View.INVISIBLE);
         else
             btn.setVisibility(View.VISIBLE);
