@@ -231,9 +231,10 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                                     t2 = null;
                                     Toast.makeText(getActivity(), "Incorrect times! The first time should be lower then the last one.", Toast.LENGTH_SHORT).show();
                                 } else {
-
+                                    nowday = spn_label.getSelectedItemPosition();
                                     switch (spn_label.getSelectedItemPosition()) {
                                         case 0:
+
                                             controller.addIntervalMon(t1, t2);
                                             controller.updateChangesMon();
                                             break;
@@ -293,7 +294,6 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
         fragment.show(getFragmentManager(), null);
     }
     private void redrawEverything(){
-
         interTable.invalidate();
         interTable.refreshDrawableState();
     }
