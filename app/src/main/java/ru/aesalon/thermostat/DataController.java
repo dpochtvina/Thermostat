@@ -19,14 +19,49 @@ public class DataController {
     }
 
     private void addElement(Vector<Interval> vec, Interval value) {
-        int index_start = 0;
+        boolean[] used = new boolean[24 * 60 + 1];
+        for (int i = 0; i < used.length; ++i)
+            used[i] = false;
+
+        for (Interval i : vec) {
+            int start = timeValue(i.tm1);
+            int end = timeValue(i.tm2);
+            for (int j = start; j <= end; ++j)
+                used[j] = true;
+        }
+
+        int start = timeValue(value.tm1);
+        int end = timeValue(value.tm2);
+        for (int j = start; j <= end; ++j)
+            used[j] = true;
+
+        int i = 0;
+        vec.clear();
+        while (i < used.length) {
+            if (used[i]) {
+                int start_time = i;
+                while (used[i]) i++;
+                int end_time = i - 1;
+                Time startTime = new Time();
+                Time endTime = new Time();
+                startTime.hour = start_time / 60;
+                startTime.minute = start_time % 60;
+                endTime.hour = end_time / 60;
+                endTime.minute = end_time % 60;
+                vec.add(new Interval(startTime, endTime));
+            } else {
+                i++;
+            }
+        }
+        /*int index_start = 0;
         int index_end = 0;
 
-        while (index_start < vec.size() && timeValue(vec.elementAt(index_start).tm1) < timeValue(value.tm1))
+        while (index_start < vec.size() && timeValue(vec.elementAt(index_start).tm2) < timeValue(value.tm1))
             index_start++;
         while (index_end < vec.size() && timeValue(vec.elementAt(index_end).tm2) < timeValue(value.tm2))
             index_end++;
         if (index_start == index_end) {
+            if (index_start < vec.size() && )
             vec.add(index_start, value);
         } else if (index_start < index_end) {
 //            int end_time = Math.max(timeValue(value.tm2), timeValue(vec.elementAt(index_end).tm2));
@@ -39,10 +74,8 @@ public class DataController {
             }
             value.tm2.hour = end_time / 60;
             value.tm2.minute = end_time % 60;
-            vec.add(index_start, value);
-        } else {
-            
-        }
+            vec.add(index_start, value);*/
+
     }
 
     private static DataController dataController;
