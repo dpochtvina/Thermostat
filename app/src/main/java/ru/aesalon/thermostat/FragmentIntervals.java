@@ -209,7 +209,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
         Dialog.Builder builder = null;
         switch (v.getId()) {
             case R.id.button_bt_float_color:
-                builder = new TimePickerDialog.Builder(6, 00) {
+                builder = new TimePickerDialog.Builder(6, 0) {
                     @Override
                     public void onPositiveActionClicked(DialogFragment fragment) {
                         TimePickerDialog dialog = (TimePickerDialog) fragment.getDialog();
@@ -230,7 +230,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                                 if (low>=high){
                                     t1 = null;
                                     t2 = null;
-                                    Toast.makeText(getActivity(), "Incorrect times! The first time should be lower then the last one.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Incorrect times! The first time should be lower then the last one.", Toast.LENGTH_LONG).show();
                                 } else {
                                     nowday = spn_label.getSelectedItemPosition();
                                     switch (spn_label.getSelectedItemPosition()) {
