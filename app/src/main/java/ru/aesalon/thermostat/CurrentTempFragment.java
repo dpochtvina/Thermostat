@@ -41,6 +41,7 @@ public class CurrentTempFragment extends Fragment {
      */
     public static int timeBoost = 500;
     public static int smooth = 100;
+    boolean first_start = true;
     TextView tvCl;
     TextView tvSeekBarSt;
     int prevSeekBarProgress=0;
@@ -127,8 +128,10 @@ public class CurrentTempFragment extends Fragment {
                 }
             }
         };
-
-        t.start();
+        if (first_start) {
+            t.start();
+            first_start = false;
+        }
         tempChange = new Thread() {
 
             @Override
