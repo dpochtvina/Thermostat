@@ -26,6 +26,7 @@
                 app:spn_labelEnable="true"
                 app:spn_label="@string/DayOfWeek"
                 app:spn_arrowSwitchMode="true"
+                app:spn_popupItemAnimOffset = "0"
                 app:spn_arrowAnimDuration="@android:integer/config_shortAnimTime"
                 app:spn_arrowInterpolator="@android:anim/decelerate_interpolator"
                 android:layout_marginLeft="30dp"
