@@ -93,6 +93,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
     }
     //from 0- Monday, 6 - Sunday
     public void loadDay(int numDayWeek){
+        nowday = numDayWeek;
         switch(numDayWeek){
             case 0:{
                 storage.put(DataController.tagIntervals_mon, controller.getIntervals(numDayWeek));
