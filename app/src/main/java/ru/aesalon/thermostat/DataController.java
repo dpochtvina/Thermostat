@@ -21,14 +21,18 @@ public class DataController {
     private void addElement(Vector<Interval> vec, Interval value) {
         int index_start = 0;
         int index_end = 0;
-        while (timeValue(vec.elementAt(index_start).tm1) < timeValue(value.tm1))
+
+        while (index_start < vec.size() && timeValue(vec.elementAt(index_start).tm1) < timeValue(value.tm1))
             index_start++;
-        while (timeValue(vec.elementAt(index_end).tm1) < timeValue(value.tm1))
+        while (index_end < vec.size() && timeValue(vec.elementAt(index_end).tm2) < timeValue(value.tm2))
             index_end++;
         if (index_start == index_end) {
             vec.add(index_start, value);
         } else if (index_start < index_end) {
-            int end_time = Math.max(timeValue(value.tm2), timeValue(vec.elementAt(index_end).tm2));
+//            int end_time = Math.max(timeValue(value.tm2), timeValue(vec.elementAt(index_end).tm2));
+            int end_time = timeValue(value.tm2);
+            if (index_end < vec.size() && timeValue(vec.elementAt(index_end).tm2) > end_time)
+                end_time = timeValue(vec.elementAt(index_end).tm2);
             while (index_start != index_end) {
                 vec.remove(index_start);
                 index_end--;
@@ -36,6 +40,8 @@ public class DataController {
             value.tm2.hour = end_time / 60;
             value.tm2.minute = end_time % 60;
             vec.add(index_start, value);
+        } else {
+            
         }
     }
 
@@ -202,7 +208,8 @@ public class DataController {
         if (intervals_mon == null) {
             intervals_mon = new Vector<>();
         }
-        intervals_mon.add(new Interval(tm1, tm2));
+        addElement(intervals_mon, new Interval(tm1, tm2));
+//        intervals_mon.add(new Interval(tm1, tm2));
     }
 
     public void updateChangesWed() {
@@ -215,7 +222,8 @@ public class DataController {
         if (intervals_wed == null) {
             intervals_wed = new Vector<>();
         }
-        intervals_wed.add(new Interval(tm1, tm2));
+        addElement(intervals_wed, new Interval(tm1, tm2));
+//        intervals_wed.add(new Interval(tm1, tm2));
     }
 
     public void updateChangesThu() {
@@ -228,7 +236,8 @@ public class DataController {
         if (intervals_thu == null) {
             intervals_thu = new Vector<>();
         }
-        intervals_thu.add(new Interval(tm1, tm2));
+        addElement(intervals_thu, new Interval(tm1, tm2));
+//        intervals_thu.add(new Interval(tm1, tm2));
     }
 
     public void updateChangesFri() {
@@ -241,7 +250,8 @@ public class DataController {
         if (intervals_fri == null) {
             intervals_fri = new Vector<>();
         }
-        intervals_fri.add(new Interval(tm1, tm2));
+        addElement(intervals_fri, new Interval(tm1, tm2));
+//        intervals_fri.add(new Interval(tm1, tm2));
     }
 
     public void updateChangesSat() {
@@ -254,7 +264,8 @@ public class DataController {
         if (intervals_sat == null) {
             intervals_sat = new Vector<>();
         }
-        intervals_sat.add(new Interval(tm1, tm2));
+        addElement(intervals_sat, new Interval(tm1, tm2));
+//        intervals_sat.add(new Interval(tm1, tm2));
     }
 
     public void updateChangesSun() {
@@ -267,7 +278,8 @@ public class DataController {
         if (intervals_sun == null) {
             intervals_sun = new Vector<>();
         }
-        intervals_sun.add(new Interval(tm1, tm2));
+        addElement(intervals_sun, new Interval(tm1, tm2));
+//        intervals_sun.add(new Interval(tm1, tm2));
     }
 
     public void updateChangesTue() {
@@ -280,7 +292,8 @@ public class DataController {
         if (intervals_tue == null) {
             intervals_tue = new Vector<>();
         }
-        intervals_tue.add(new Interval(tm1, tm2));
+        addElement(intervals_tue, new Interval(tm1, tm2));
+//        intervals_tue.add(new Interval(tm1, tm2));
     }
 
 
