@@ -205,7 +205,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
     public FragmentIntervals() {
     }
 
-    public void dialogShow(final View v) {
+    public void dialogShow(final View v, final String name) {
         Dialog.Builder builder = null;
         switch (v.getId()) {
             case R.id.button_bt_float_color:
@@ -219,7 +219,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                             t1 = new Time();
                             Toast.makeText(getActivity(), "Start time " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
                             t1.set(0, getMinute(), getHour(), 0, 0, 0);
-                            dialogShow1(v);
+                            dialogShow(v, "Set finish time");
                         } else {
                             if (t2 == null){
                                 t2 = new Time();
@@ -284,98 +284,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
                         super.onNegativeActionClicked(fragment);
                     }
                 };
-                builder.title("Start time");
-                builder.positiveAction("OK")
-                        .negativeAction("CANCEL");
-                break;
-        }
-        DialogFragment fragment = DialogFragment.newInstance(builder);
-//        if (builder != null) {
-//            builder.getDialog().setTitle(t1 == null ? " 3" : " 4");
-//        }
-        fragment.show(getFragmentManager(), null);
-    }
-
-    public void dialogShow1(final View v) {
-        Dialog.Builder builder = null;
-        switch (v.getId()) {
-            case R.id.button_bt_float_color:
-                builder = new TimePickerDialog.Builder(6, 0) {
-                    @Override
-                    public void onPositiveActionClicked(DialogFragment fragment) {
-                        TimePickerDialog dialog = (TimePickerDialog) fragment.getDialog();
-
-                        super.onPositiveActionClicked(fragment);
-                        if (t1==null) {
-                            t1 = new Time();
-                            Toast.makeText(getActivity(), "Start time " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
-                            t1.set(0, getMinute(), getHour(), 0, 0, 0);
-                            dialogShow1(v);
-                        } else {
-                            if (t2 == null){
-                                t2 = new Time();
-                                Toast.makeText(getActivity(), "Finish time " + dialog.getFormattedTime(SimpleDateFormat.getTimeInstance()), Toast.LENGTH_SHORT).show();
-                                t2.set(0, getMinute(), getHour(), 0, 0, 0);
-
-                                int low= t1.hour*60+t1.minute;
-                                int high = t2.hour*60+t2.minute;
-                                if (low>=high){
-                                    t1 = null;
-                                    t2 = null;
-                                    Toast.makeText(getActivity(), "Incorrect times! The first time should be lower then the last one.", Toast.LENGTH_LONG).show();
-                                } else {
-                                    nowday = spn_label.getSelectedItemPosition();
-                                    switch (spn_label.getSelectedItemPosition()) {
-                                        case 0:
-
-                                            controller.addIntervalMon(t1, t2);
-                                            controller.updateChangesMon();
-                                            break;
-                                        case 1:
-                                            controller.addIntervalTue(t1, t2);
-                                            controller.updateChangesTue();
-                                            break;
-                                        case 2:
-                                            controller.addIntervalWed(t1, t2);
-                                            controller.updateChangesWed();
-                                            break;
-                                        case 3:
-                                            controller.addIntervalThu(t1, t2);
-                                            controller.updateChangesThu();
-                                            break;
-                                        case 4:
-                                            controller.addIntervalFri(t1, t2);
-                                            controller.updateChangesFri();
-                                            break;
-                                        case 5:
-                                            controller.addIntervalSat(t1, t2);
-                                            controller.updateChangesSat();
-                                            break;
-                                        case 6:
-                                            controller.addIntervalSun(t1, t2);
-                                            controller.updateChangesSun();
-                                            break;
-
-                                    }
-                                    REALLOADDAY(nowday);
-                                }
-                                _hRedraw.sendEmptyMessage(REFRESH);;
-                                t1 = null;
-                                t2 = null;
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onNegativeActionClicked(DialogFragment fragment) {
-                        t1 = null;
-                        t2 = null;
-                        Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_SHORT).show();
-                        super.onNegativeActionClicked(fragment);
-                    }
-                };
-                builder.title("Finish time");
+                builder.title(name);
                 builder.positiveAction("OK")
                         .negativeAction("CANCEL");
                 break;
@@ -472,7 +381,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
             @Override
             public void onClick(View v) {
                 if(v instanceof FloatingActionButton){
-                    dialogShow(v);
+                    dialogShow(v, "Set start time");
 //                    dialogShow(v);
                 }
 
