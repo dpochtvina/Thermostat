@@ -7,6 +7,7 @@
     android:layout_margin="5dp"
     android:background="@drawable/cell_table"
     android:id="@+id/intervals_single_row"
+    android:gravity="center_vertical"
     >
 
     <TextView

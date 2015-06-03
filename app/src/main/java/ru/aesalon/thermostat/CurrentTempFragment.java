@@ -8,6 +8,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextClock;
@@ -42,6 +45,7 @@ public class CurrentTempFragment extends Fragment {
     public static int timeBoost = 500;
     public static int smooth = 100;
     boolean first_start = true;
+    ImageView imgv;
     TextView tvCl;
     TextView tvSeekBarSt;
     int prevSeekBarProgress=0;
@@ -80,10 +84,52 @@ public class CurrentTempFragment extends Fragment {
 
     public CurrentTempFragment() {
     }
-
+    public enum Modes{day,night,vac};
+    private Modes nowMode;
+    public void UpdateImage(Modes mode)
+    {
+        if(nowMode!=mode)
+        {
+            switch(mode)
+            {
+                case day: {
+                    imgv.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.home_day));
+                    break;
+                }
+                case night:{
+                    imgv.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.home_night));
+                    break;
+                }
+                case vac:{
+                    imgv.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.vacation));
+                    break;
+                }
+            }
+            nowMode = mode;
+        }
+    }
+    public void RefreshImage()
+    {
+        switch(nowMode)
+        {
+            case day: {
+                imgv.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.home_day));
+                break;
+            }
+            case night:{
+                imgv.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.home_night));
+                break;
+            }
+            case vac:{
+                imgv.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.vacation));
+                break;
+            }
+        }
+    }
     @Override
     public void onStart(){
         super.onStart();
+RefreshImage();
         dataController = DataController.getInstance(getActivity());
         TimeZone timezone = TimeZone.getDefault();
         if(gregorianCalendar==null) {
@@ -109,7 +155,6 @@ public class CurrentTempFragment extends Fragment {
                                         second);
                                 Time time = new Time();
                                 time.set(0, Integer.parseInt(minute), Integer.parseInt(hour), 0, 0, 0);
-
                                 if (!MainActivity.vacation && changeFromNighttoDay) {
                                     if (dataController.isDay(gregorianCalendar.get(Calendar.DAY_OF_WEEK), time)) {
                                         MainActivity.isIsDay = true;
@@ -142,6 +187,15 @@ public class CurrentTempFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                if(MainActivity.vacation) {
+                                    UpdateImage(Modes.vac);
+                                }
+                                else {
+                                    if (MainActivity.isIsDay)
+                                        UpdateImage(Modes.day);
+                                    else
+                                        UpdateImage(Modes.night);
+                                }
                                 if( MainActivity.desiredTemp!=MainActivity.currentTemp) {
                                     if (MainActivity.currentTemp < MainActivity.desiredTemp) {
                                         MainActivity.currentTemp++;
@@ -158,7 +212,6 @@ public class CurrentTempFragment extends Fragment {
                                 if (!MainActivity.vacation && changeFromNighttoDay) {
                                     if (MainActivity.isIsDay) {
                                         MainActivity.desiredTemp = MainActivity.dayTemp;
-
                                     } else {
                                         MainActivity.desiredTemp = MainActivity.nightTemp;
                                     }
@@ -177,6 +230,7 @@ public class CurrentTempFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cur_temp, container, false);
+        imgv = (ImageView)rootView.findViewById(R.id.fctMainIcon);
         tvSeekBarSt = (TextView) rootView.findViewById(R.id.textViewSeekBarStatus);
         tvCancel = (TextView) rootView.findViewById(R.id.textViewCancel);
         tvCl = (TextView) rootView.findViewById(R.id.tvCl);
