@@ -72,7 +72,6 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
 
     public void REALLOADDAY(int numDayWeek)
     {
-
         nowday = numDayWeek;
         loadDay(numDayWeek);
     }
@@ -85,11 +84,12 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
 
         //TODO:Test Remove!
 
-        if (storage==null || storage.get(DataController.tagIntervals_mon)==null) {
+/*        if (storage==null || storage.get(DataController.tagIntervals_mon)==null) {
             loadDay(0);
 
-        }
-        addRows(storage.get(DataController.tagIntervals_mon));
+        }*/
+        REALLOADDAY(nowday);
+        //addRows(storage.get(DataController.tagIntervals_mon));
     }
     //from 0- Monday, 6 - Sunday
     public void loadDay(int numDayWeek){

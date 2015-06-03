@@ -39,7 +39,8 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/intervals_table"
                 android:layout_marginRight="20dp"
-                android:layout_marginLeft="30dp"></TableLayout>
+                android:layout_marginLeft="30dp"
+                ></TableLayout>
 
             <com.rey.material.widget.FloatingActionButton
                 style="@style/FloatingColorActionButton"
