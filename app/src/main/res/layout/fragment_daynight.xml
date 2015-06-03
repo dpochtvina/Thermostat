@@ -37,7 +37,7 @@
                 android:id="@+id/tvTemp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="10dp"
                 android:textSize="25dp"/>
 
             <SeekBar
@@ -93,7 +93,7 @@
                 android:layout_alignLeft="@+id/seekBarDay"
                 android:layout_alignStart="@+id/seekBarDay"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_toLeftOf="@+id/tvConfirm"
                 android:layout_toStartOf="@+id/tvConfirm" />
 
@@ -109,7 +109,7 @@
                 android:layout_below="@+id/seekBarDay"
                 android:layout_alignRight="@+id/seekBarDay"
                 android:layout_alignEnd="@+id/seekBarDay"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp" />
 
 
@@ -148,7 +148,7 @@
                     android:id="@+id/tvNightTemp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="10dp"
                     android:textSize="25dp"/>
 
                 <SeekBar
@@ -204,7 +204,7 @@
                     android:layout_alignLeft="@+id/seekBarNight"
                     android:layout_alignStart="@+id/seekBarNight"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_toLeftOf="@+id/tvConfirmNight"
                     android:layout_toStartOf="@+id/tvConfirmNight" />
 
@@ -220,7 +220,7 @@
                     android:layout_below="@+id/seekBarNight"
                     android:layout_alignRight="@+id/seekBarNight"
                     android:layout_alignEnd="@+id/seekBarNight"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="30dp" />
 
 
