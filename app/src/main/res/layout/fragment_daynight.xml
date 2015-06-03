@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent"
+    android:weightSum="100">
 
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="25dp"
-        android:gravity="center_horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="50"
+        android:orientation="vertical"
+        android:gravity="center">
+
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -112,112 +115,118 @@
 
 
         </RelativeLayout>
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/home_night"
-            android:layout_marginTop="25dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Night"
-            android:id="@+id/textView5"
-            android:layout_gravity="center_horizontal"
-             />
-
-        <RelativeLayout
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/home_night"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="20.0 °C"
-                android:id="@+id/tvNightTemp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
-                android:textSize="25dp"/>
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Night"
+                android:id="@+id/textView5"
+                android:layout_gravity="center_horizontal"
+                />
 
-            <SeekBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/seekBarNight"
-                android:max="250"
-                android:progress="150"
-                android:indeterminate="false"
-                android:nestedScrollingEnabled="false"
-                android:layout_below="@+id/tvNightTemp"
-                android:layout_toRightOf="@+id/btnReduceTemp"
-                android:layout_toLeftOf="@+id/btnIncrTemp"
-                android:layout_toStartOf="@+id/btnIncrTemp"
-                android:layout_marginTop="5dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="20.0 °C"
+                    android:id="@+id/tvNightTemp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25dp"
+                    android:textSize="25dp"/>
 
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/btnReduceTemp"
-                android:src="@drawable/minus"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:visibility="visible"
-                android:layout_alignTop="@+id/seekBarNight"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="10dp" />
+                <SeekBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/seekBarNight"
+                    android:max="250"
+                    android:progress="150"
+                    android:indeterminate="false"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_below="@+id/tvNightTemp"
+                    android:layout_toRightOf="@+id/btnReduceTemp"
+                    android:layout_toLeftOf="@+id/btnIncrTemp"
+                    android:layout_toStartOf="@+id/btnIncrTemp"
+                    android:layout_marginTop="5dp" />
 
-            <ImageButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/btnIncrTemp"
-                android:src="@drawable/plus2"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:visibility="visible"
-                android:layout_alignTop="@+id/seekBarNight"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="10dp" />
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/btnReduceTemp"
+                    android:src="@drawable/minus"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY"
+                    android:visibility="visible"
+                    android:layout_alignTop="@+id/seekBarNight"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="10dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="CANCEL"
-                android:id="@+id/tvCancelNight"
-                android:textColor="#039BE5"
-                android:textStyle="bold"
-                android:visibility="visible"
-                android:layout_below="@+id/seekBarNight"
-                android:layout_alignLeft="@+id/seekBarNight"
-                android:layout_alignStart="@+id/seekBarNight"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="20dp"
-                android:layout_toLeftOf="@+id/tvConfirmNight"
-                android:layout_toStartOf="@+id/tvConfirmNight" />
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/btnIncrTemp"
+                    android:src="@drawable/plus2"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY"
+                    android:visibility="visible"
+                    android:layout_alignTop="@+id/seekBarNight"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="10dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="CONFIRM"
-                android:id="@+id/tvConfirmNight"
-                android:textColor="#039BE5"
-                android:textStyle="bold"
-                android:visibility="visible"
-                android:layout_below="@+id/seekBarNight"
-                android:layout_alignRight="@+id/seekBarNight"
-                android:layout_alignEnd="@+id/seekBarNight"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="30dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="CANCEL"
+                    android:id="@+id/tvCancelNight"
+                    android:textColor="#039BE5"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    android:layout_below="@+id/seekBarNight"
+                    android:layout_alignLeft="@+id/seekBarNight"
+                    android:layout_alignStart="@+id/seekBarNight"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toLeftOf="@+id/tvConfirmNight"
+                    android:layout_toStartOf="@+id/tvConfirmNight" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="CONFIRM"
+                    android:id="@+id/tvConfirmNight"
+                    android:textColor="#039BE5"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    android:layout_below="@+id/seekBarNight"
+                    android:layout_alignRight="@+id/seekBarNight"
+                    android:layout_alignEnd="@+id/seekBarNight"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="30dp" />
 
 
 
-        </RelativeLayout>
+            </RelativeLayout>
+            </LinearLayout>
 
-    </LinearLayout>
 
-
-</RelativeLayout>
+</LinearLayout>

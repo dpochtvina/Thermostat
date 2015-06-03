@@ -30,7 +30,7 @@ import com.rey.material.drawable.RippleDrawable;
 import com.rey.material.widget.FloatingActionButton;
 import com.rey.material.widget.SnackBar;
 import com.rey.material.widget.Spinner;
-import com.rey.material.widget.Button;
+//import com.rey.material.widget.Button;
 
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -58,7 +58,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
     protected static final int REFRESH = 0;
     private HashMap<String, Vector<DataController.Interval>>storage;
     private Spinner spn_label;
-    Button bt_time_light;
+    ImageButton bt_time_light;
     int nowday = 0;
     String tagNow;
     FloatingActionButton btn;
@@ -408,7 +408,7 @@ public class FragmentIntervals extends Fragment implements View.OnClickListener 
             View tableRow = li.inflate(R.layout.intervals_row, null);
             TextView tv = (TextView)tableRow.findViewById(R.id.interbals_row_timeTV);
             tv.setText(inter.toString());
-            Button delete = (Button)tableRow.findViewById(R.id.intervals_row_button);
+            ImageButton delete = (ImageButton)tableRow.findViewById(R.id.intervals_row_button);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
