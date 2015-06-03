@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Thermostat</string>
+    <string name="app_name">THERMOSTAT</string>
 
     <string name="title_section1">Current</string>
     <string name="title_section2">Day&amp;Night</string>

@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Set to 25.0 °C"
+        android:text="Change to 25.0 °C"
         android:textColor="#263238"
         android:id="@+id/textViewSeekBarStatus"
         android:layout_above="@+id/seekBar"

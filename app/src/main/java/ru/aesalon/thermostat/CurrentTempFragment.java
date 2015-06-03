@@ -88,6 +88,9 @@ public class CurrentTempFragment extends Fragment {
     private Modes nowMode;
     public void UpdateImage(Modes mode)
     {
+
+        if(imgv == null)
+            return;
         if(nowMode!=mode)
         {
             switch(mode)
@@ -110,6 +113,10 @@ public class CurrentTempFragment extends Fragment {
     }
     public void RefreshImage()
     {
+        if(nowMode == null)
+            return;
+        if(imgv==null)
+            return;
         switch(nowMode)
         {
             case day: {
@@ -129,7 +136,6 @@ public class CurrentTempFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-RefreshImage();
         dataController = DataController.getInstance(getActivity());
         TimeZone timezone = TimeZone.getDefault();
         if(gregorianCalendar==null) {
@@ -224,7 +230,7 @@ RefreshImage();
             }
         };
         tempChange.start();
-
+        RefreshImage();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
