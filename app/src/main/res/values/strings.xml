@@ -8,7 +8,7 @@
     <string name="status_day">Day program running</string>
     <string name="status_night">Night program running</string>
     <string name="status_custom">Custom program running</string>
-    <string name="DayOfWeek">Day of week</string>
+    <string name="DayOfWeek">Day of the week</string>
 
     <string name="Vacation">Vacation mode</string>
     <string name="preference_file_key">ru.aesalon.thermostat.data</string>

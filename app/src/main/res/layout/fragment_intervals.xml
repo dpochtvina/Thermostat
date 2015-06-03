@@ -30,7 +30,8 @@
                 app:spn_arrowAnimDuration="@android:integer/config_shortAnimTime"
                 app:spn_arrowInterpolator="@android:anim/decelerate_interpolator"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp"
+                />
 
             <TableLayout
                 android:layout_width="match_parent"

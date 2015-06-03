@@ -26,8 +26,18 @@
         android:layout_height="wrap_content"
         android:text="Delete"
         android:id="@+id/intervals_row_button"
-
         app:rd_enable="true"
         android:layout_weight="1" />
+    <!--<LinearLayout-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center">-->
+        <!--<ImageButton-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:src="@drawable/trash_can"-->
+            <!--android:id="@+id/intervals_row_button"-->
+            <!--android:scaleType="fitCenter"/>-->
+    <!--</LinearLayout>-->
 
 </TableRow>
